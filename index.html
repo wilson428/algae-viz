@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="algae_viz">
-            <div id="console">Each species of algae in each condition begins with 100 cells. Use the buttons below to see how it grows or declines over 10 days.</div>
+            <div id="console">Each species of algae in each condition begins with 100 cells. Use the buttons below to see how it grows or declines over a week.</div>
             <div id="days">
                 <div id="day_count">DAY 0</div>
                 <div id="days_row"></div>
@@ -28,15 +28,19 @@
             var temp_colors = ["#0A38FF", "#146BFF", "#1E9FFF", "#29D3FF"];
             var lux_colors = ["#FEE66D", "#FDFFB8"];
 
-            var width = Math.min(1200, document.body.offsetWidth);
-            var petri_size = width / 9;
+            var width = Math.min(800, document.getElementById("species").offsetWidth);
+            console.log(width);
+            document.querySelector("#species table").style.width = width - 40; // allow for scroll bar outside
+
+
+            var petri_size = width / 8 - 20;
 
             // number of cells to start with
             var STARTING_N = 100;
 
             var species = [];
 
-            for (var c = 0; c <= 10; c += 1) {
+            for (var c = 0; c <= 7; c += 1) {
                 var button = document.createElement("button");
                 button.innerHTML = c;
                 if (c == 0) {
@@ -109,6 +113,7 @@
                     }
                     this.classList = "selected";
                     var day = this.innerHTML;
+                    document.getElementById("day_count").innerHTML = "DAY " + day;
                     goToDay(+day);
                 });
             }

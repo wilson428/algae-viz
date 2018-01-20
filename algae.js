@@ -34,7 +34,7 @@ function Dish(container, size, algae_index, key) {
 
 	this.growth_rate = document.createElement("div");
 	this.growth_rate.classList = "growth_rate";
-	this.growth_rate.innerHTML = this.data.values[key].toPrecision(2);
+	this.growth_rate.innerHTML = this.data.values[key].toFixed(2);
 	td.appendChild(this.growth_rate);
 
 	this.context = this.canvas.getContext("2d");
@@ -54,9 +54,11 @@ Dish.prototype.addCell = function() {
 	// radius expands as more cells appear, contracts as they disappear
 	// the existing cells in a rough circle should take up about (CELL_RADIUS * SQRT(N))
 	// it can't exceed the radius of the dish minus the radius of a cell
-	var R = Math.min(this.radius - CELL_RADIUS, CELL_RADIUS * Math.sqrt(this.N) + 10);
+	var populated = Math.sqrt(this.N);
+	// var R = Math.min(this.radius - CELL_RADIUS, CELL_RADIUS * populated);
+	var R = this.radius - CELL_RADIUS;
 	var theta = Math.PI * 2 * Math.random();
-	var radius = R * Math.random();
+	var radius = R * Math.sqrt(Math.random());
 	var x = Math.cos(theta) * radius + this.size / 2;
 	var y = Math.sin(theta) * radius + this.size / 2;
 

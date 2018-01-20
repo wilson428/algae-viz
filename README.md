@@ -5,10 +5,15 @@ By Chris Wilson ([@wilson428](https://github.com/wilson428))
 Entry for the [/r/dataisbeautiful/ Jan. 2018 contest](https://www.reddit.com/r/dataisbeautiful/comments/7nm6ed/battle_dataviz_battle_for_the_month_of_january/)
 
 ## Getting the data
+
 I'm using the Node modules [downcache](https://www.npmjs.com/package/downcache) (which I wrote and maintain) and [cheerio](https://www.npmjs.com/package/cheerio) to scrape the relevant [table](http://aquatext.com/tables/algaegrwth.htm) and convert it into a nice JSON file (in JavaScript form to avoid AJAX calls). It also outputs a `categories.js` with the eight combinations of temperature and light. These outputs are in the repo, so you don't need to rerun them unless you so desire:
 
 	npm install
 	npm scape.js
+
+## Running the visualization
+
+Just open [index.html](index.html) in a browser. You don't even have to run a local server since there are no AJAX calls.
 
 ## Calculating cell growth
 
@@ -18,5 +23,7 @@ It is surprisingly difficult to find a cogent definition of "divisions per day",
 
 There are 152 unique combinations of temperature, light and species (4 temperatures * 2 luxes/temperature * 19 species). While it would be convenient to use D3 to handle the clustering of cells around a central point, an SVG-based visualization would quickly blossom (so to speak) into 100,000-plus DOM objects. Canvas is a much more performance-friendly solution. Each cell is randomly placed inside its Petri dish with a simple random radius from the center at a random angle.
 
+## Scientific limitations
 
+Algae requires light to reproduce, so a dramatically high level of divisions-per-day, sometimes classified as a [Harmful algae bloom](https://en.wikipedia.org/wiki/Harmful_algal_bloom), will max out when the algae is so dense that it's rate of reproduction reduces. This seven-day simulation does not place an upper-limit on the number of cells that can be reproduced even when, particularly in the case of *Nannochlorois oculata*, the algae becomes so populous that it would not longer fully reproduce every day.
 

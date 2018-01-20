@@ -11,7 +11,7 @@
 }
 
 #console {
-	text-align: center;
+	text-align: left;
 	margin-bottom: 10px;
 }
 
@@ -93,4 +93,9 @@ button {
 
 button.selected {
 	background-color: #66FF66;
+}
+
+#play_pause {
+	width: 50px;
+	background-color: #CCC;
 }

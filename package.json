@@ -1,0 +1,23 @@
+{
+  "name": "algae-viz",
+  "version": "0.0.1",
+  "description": "Entry for the /r/dataisbeautiful/ Jan. 2018 contest",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilson428/algae-viz.git"
+  },
+  "author": "Chris Wilson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wilson428/algae-viz/issues"
+  },
+  "homepage": "https://github.com/wilson428/algae-viz#readme",
+  "devDependencies": {
+    "cheero": "0.0.1",
+    "downcache": "0.0.9"
+  }
+}

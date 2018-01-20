@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Algae Types</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="algae.css">
+    </head>
+    <body>
+        <div id="algae_viz">
+            <div id="console">Each species of algae in each condition begins with 100 cells. Use the buttons below to see how it grows or declines over 10 days.</div>
+            <div id="days">
+                <div id="day_count">DAY 0</div>
+                <div id="days_row"></div>
+            </div>
+            <div id="species">
+                <table cellpadding="0" cellspacing="0">
+                    <tbody id="dishes"></tbody>
+                </table>
+            </div>
+        </div>
+        <script src="data/algae_data.js"></script>
+        <script src="data/categories.js"></script>
+        <script src="algae.js"></script>
+        <script>
+            var temp_colors = ["#0A38FF", "#146BFF", "#1E9FFF", "#29D3FF"];
+            var lux_colors = ["#FEE66D", "#FDFFB8"];
+
+            var width = Math.min(1200, document.body.offsetWidth);
+            var petri_size = width / 9;
+
+            // number of cells to start with
+            var STARTING_N = 100;
+
+            var species = [];
+
+            for (var c = 0; c <= 10; c += 1) {
+                var button = document.createElement("button");
+                button.innerHTML = c;
+                if (c == 0) {
+                    button.classList = "selected";
+                }
+                document.querySelector("#days_row").appendChild(button);
+            }
+
+            algae_data.forEach(function(algae, a) {                
+                // species name
+                var header = document.createElement("tr");
+                header.classList = "algae_title";
+                document.querySelector("#dishes").appendChild(header);
+
+                var td = document.createElement("td");
+                td.colSpan = 8;
+                td.innerHTML = algae.name;
+                header.appendChild(td);
+
+                var temp = document.createElement("tr");
+                temp.classList = "temp_header";
+                document.querySelector("#dishes").appendChild(temp);
+
+                var lux = document.createElement("tr");
+                lux.classList = "lux_header";
+                document.querySelector("#dishes").appendChild(lux);
+
+                var dishes = document.createElement("tr");
+                dishes.id = "algae_" + a;
+                dishes.classList = "algae_row";
+                document.querySelector("#dishes").appendChild(dishes);
+
+                categories.forEach(function(category, c) {
+                    if (c % 2 == 0) {
+                        var td = document.createElement("td");
+                        td.innerHTML = category.temperature + "&deg;";
+                        td.colSpan = 2;
+                        td.style.backgroundColor = temp_colors[c / 2];
+                        temp.appendChild(td);
+                    }
+
+                    var td = document.createElement("td");
+                    td.innerHTML = category.lux + " lux";
+                    td.style.backgroundColor = lux_colors[c % 2];
+                    lux.appendChild(td);
+                });
+
+                categories.forEach(function(category, c) {
+                    var dish = new Dish("#algae_" + a, petri_size, a, category.slug);
+                    dish.addCells(STARTING_N);
+                    species.push(dish);
+                });                
+            });
+
+
+            var day = 0;
+
+            function goToDay(day) {
+                species.forEach(function(s) {
+                    s.addDay(day);
+                });
+            }
+
+            var buttons = document.querySelectorAll("button");
+
+            for (var c = 0; c < buttons.length; c += 1) {
+                buttons[c].addEventListener("click", function() {
+                    for (var c = 0; c < buttons.length; c += 1) {
+                        buttons[c].classList = "";
+                    }
+                    this.classList = "selected";
+                    var day = this.innerHTML;
+                    goToDay(+day);
+                });
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,91 @@
+#algae_viz {
+	font-family: Arial;
+	max-width: 1200px;
+}
+
+#day_count {
+	font-size: 24px;
+	font-weight: 700px;
+	text-align: center;
+}
+
+#console {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+#species {
+	width: 100%;
+	max-height: 600px;
+	overflow-y: auto;
+}
+
+.algae_title td {
+	text-align: left;
+	font-weight: bold;
+	font-size: 24px;
+	padding: 20px 0 3px 0;
+	text-align: center;
+	font-weight: 400;
+}
+
+.dish {
+	border: 1px solid #CCC;
+	margin: 5px;
+	padding: 5px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
+.dish canvas {
+	margin: 0 auto;
+}
+
+.temp_header td {
+	text-align: center;
+	font-weight: 700;
+	color: white;
+	padding: 6px 0;
+}
+
+.lux_header td {
+	text-align: center;
+	font-weight: 700;
+	padding: 3px 0;
+}
+
+.cell_count {
+	text-align: center;
+}
+
+.growth_rate {
+	text-align: center;
+}
+
+.algae_row td {
+	width: 12.5%;
+}
+
+#days {
+	text-align: center;
+	padding: 5px 0;
+}
+
+#days_header {
+	margin: 5px auto;
+}
+
+button {
+	display: inline-block;
+	outline: none;
+	cursor: pointer;
+	font-size: 16px;
+	margin: 0 2px;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+
+button.selected {
+	background-color: #66FF66;
+}

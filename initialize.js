@@ -65,7 +65,7 @@ algae_data.forEach(function(algae, a) {
     // (Yes, these two category loops could be combined, but I prefer to code in drawing order when it's not too burdensome)         
     categories.forEach(function(category, c) {
         var dish = new Dish("#algae_" + a, petri_size, a, category.slug);
-        dish.addCells(STARTING_N);
+        //dish.addCells(STARTING_N);
         species.push(dish);
     });
 });
@@ -151,6 +151,8 @@ for (var c = 0; c < buttons.length; c += 1) {
         goToDay(day);
     });
 }
+
+goToDay(0);
 
 // https://stackoverflow.com/questions/2481350/how-to-get-scrollbar-position-with-javascript
 var getScrollTop = function(){

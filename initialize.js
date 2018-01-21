@@ -11,24 +11,17 @@ var STARTING_N = 100;
 
 var species = [];
 
-// play/pause button
-var button = document.createElement("button");
-button.innerHTML = "&#9658;";
-button.id = "play_pause";
-document.querySelector("#days_row").appendChild(button);
-
-// day buttons
-for (var c = 0; c <= 7; c += 1) {
-    var button = document.createElement("button");
-    button.innerHTML = c;
-    if (c == 0) {
-        button.classList = "selected";
-    }
-    document.querySelector("#days_row").appendChild(button);
-}
-
-// make a header and series of 8 Petri dishes for each species
 algae_data.forEach(function(algae, a) {                
+    // container for the controls
+    var day_container = document.createElement("tr");
+    day_container.classList = "day_container";    
+    document.querySelector("#dishes").appendChild(day_container);
+
+    var td = document.createElement("td");    
+    td.colSpan = 8;
+    td.id = "day_container_" + a;
+    day_container.appendChild(td);
+
     // species name
     var header = document.createElement("tr");
     header.classList = "algae_title";
@@ -77,6 +70,25 @@ algae_data.forEach(function(algae, a) {
     });
 });
 
+// play/pause button
+var button = document.createElement("button");
+button.innerHTML = "&#9658;";
+button.id = "play_pause";
+document.querySelector("#days_row").appendChild(button);
+
+// day buttons
+for (var c = 0; c <= 7; c += 1) {
+    var button = document.createElement("button");
+    button.innerHTML = c;
+    if (c == 0) {
+        button.classList = "selected";
+    }
+    document.querySelector("#days_row").appendChild(button);
+}
+
+document.getElementById("day_container_0").append(document.getElementById("days_container"));
+
+
 var day = 0;
 
 // draw the number of cells in each Petri dish for all 152 combinations
@@ -86,7 +98,6 @@ function goToDay(day) {
     for (var c = 0; c < buttons.length; c += 1) {
         buttons[c].classList = "";
     }
-    console.log(day);
     buttons[day + 1].classList = "selected";
 
     species.forEach(function(s) {
@@ -99,7 +110,6 @@ function goToDay(day) {
 var buttons = document.querySelectorAll("button"),
     timer,
     PLAYING = false;
-
 
 for (var c = 0; c < buttons.length; c += 1) {
     buttons[c].addEventListener("click", function() {
@@ -141,3 +151,39 @@ for (var c = 0; c < buttons.length; c += 1) {
         goToDay(day);
     });
 }
+
+// https://stackoverflow.com/questions/2481350/how-to-get-scrollbar-position-with-javascript
+var getScrollTop = function(){
+    if (typeof window.pageYOffset != undefined) {
+        return window.pageYOffset;
+    } else {
+        var sy, d = document, r = d.documentElement, b = d.body;
+        sy= r.scrollTop || b.scrollTop || 0;
+        return sy;
+    }
+}
+
+var viz_height = document.getElementById("algae_viz").offsetTop + document.getElementById("algae_viz").offsetHeight;
+
+// move the controls to the highest visible algae species
+function positionControls() {
+    var scrollPosition = getScrollTop();
+
+    // if we've scrolled past the viz, return
+    if (scrollPosition > viz_height) {
+        return;
+    }
+
+    // find the species that, accounting for the page scroll, is highest and fully visible
+    for (var c = 0; c < algae_data.length; c += 1) {
+        var dc_position = document.getElementById("day_container_" + c).offsetTop + document.getElementById("species").offsetTop - scrollPosition;
+        if (dc_position > 0) {
+            document.getElementById("day_container_" + c).append(document.getElementById("days_container"));
+            break;
+        }
+    }
+}
+
+window.onscroll = function() {
+    positionControls();
+};

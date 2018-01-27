@@ -1,8 +1,12 @@
 #algae_viz {
 	font-family: Arial;
+	width: 100%;
 	max-width: 1000px;
 	display: block;
 	margin-bottom: 10px;
+}
+
+#dishes {
 }
 
 #title {
@@ -13,65 +17,69 @@
 #console {
 	text-align: left;
 	margin: 10px auto;
+	width: 100%;
 	max-width: 750px;
 	font-size: 16px;
 }
 
-table {
-	width: 100%;
+.algae_title {
+	text-align: center;
+	font-size: 24px;
+	padding: 6px 0 3px 0;
 }
 
-.algae_title td {
-	text-align: left;
-	font-weight: bold;
-	font-size: 24px;
-	padding: 3px 0;
+.temp {
+	display: inline-block;
+	width: 25%;
 	text-align: center;
-	font-weight: 400;
-	word-wrap: break-word;
+	color: white;
+	padding: 5px 0;
+	box-sizing: border-box;
+}
+
+.lux {
+	display: inline-block;
+	width: 12.5%;
+	text-align: center;
+	font-size: 14px;
+	padding: 2px 0;
+	margin: -2px auto;	
 }
 
 .dish {
 	border: 1px solid #CCC;
-	margin: 5px;
-	padding: 5px;
 	box-sizing: border-box;
 	text-align: center;
+	display: inline-block;
+	width: 12.5%;
 }
 
 .dish canvas {
 	margin: 0 auto;
 }
 
-.temp_header td {
-	text-align: center;
-	font-weight: 700;
-	color: white;
-	padding: 6px 0;
-}
-
-.lux_header td {
-	text-align: center;
-	font-weight: 700;
-	padding: 3px 0;
-}
-
 .cell_count {
 	text-align: center;
+	font-size: 16px;
+	margin: 3px auto -1px auto;
 }
 
 .growth_rate {
 	text-align: center;
+	font-size: 16px;
+	margin: -2px auto 3px auto;	
 }
 
-.algae_row td {
-	width: 12.5%;
+@media (max-width: 400px) {
+	.cell_count,.growth_rate {
+		font-size: 12px;
+	}
 }
 
 #days_container {
 	position: relative;
 	text-align: center;
-	margin-top: 15px;
+	margin: 10px auto 0 auto;
 }
 
 #days {
@@ -79,19 +87,23 @@ table {
 	border: 1px solid #666;
 	margin: 0px auto;
 	text-align: center;
-	padding: 5px 0;
+	padding: 3px 0;
 	width: 300px;
 	text-align: center;
 }
 
 #days_header {
-	margin: 5px auto;
+	margin: 3px auto;
 }
 
 #day_count {
 	font-size: 24px;
 	font-weight: 700px;
 	text-align: center;
+}
+
+.day_container td {
+	display: inline-block;
 }
 
 button {
@@ -103,7 +115,6 @@ button {
 	background-color: white;
 	border: 1px solid black;
 	border-radius: 5px;
-	width: 25px;
 }
 
 button.selected {

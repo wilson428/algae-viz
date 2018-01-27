@@ -1,63 +1,59 @@
 var temp_colors = ["#0A38FF", "#146BFF", "#1E9FFF", "#29D3FF"];
 var lux_colors = ["#FEE66D", "#FDFFB8"];
 
-var width = Math.min(800, document.getElementById("species").offsetWidth);
-document.querySelector("#species table").style.width = width - 40; // allow for scroll bar outside
+var width = document.getElementById("dishes").offsetWidth;
+//document.querySelector("#species table").style.width = width - 40; // allow for scroll bar outside
 
-var petri_size = width / 8 - 20;
+var petri_size = width / 8 * 0.95; // add just a little margin around the dish
 
-// number of cells to start with
+// number of cells to start with. Start with fewer for small devices so that the dishes don't get too crowded too soon
 var STARTING_N = 100;
+if (width <= 400) {
+    STARTING_N = 50;
+}
 
 var species = [];
 
 algae_data.forEach(function(algae, a) {                
     // container for the controls
-    var day_container = document.createElement("tr");
-    day_container.classList = "day_container";    
+    var day_container = document.createElement("div");
+    day_container.classList = "day_container";
+    day_container.id = "day_container_" + a;
     document.querySelector("#dishes").appendChild(day_container);
 
-    var td = document.createElement("td");    
-    td.colSpan = 8;
-    td.id = "day_container_" + a;
-    day_container.appendChild(td);
-
     // species name
-    var header = document.createElement("tr");
+    var header = document.createElement("div");
     header.classList = "algae_title";
+    header.innerHTML = algae.name;
     document.querySelector("#dishes").appendChild(header);
 
-    var td = document.createElement("td");
-    td.colSpan = 8;
-    td.innerHTML = algae.name;
-    header.appendChild(td);
-
     // add the headers for temperature and light
-    var temp = document.createElement("tr");
+    var temp = document.createElement("div");
     temp.classList = "temp_header";
     document.querySelector("#dishes").appendChild(temp);
 
-    var lux = document.createElement("tr");
+    var lux = document.createElement("div");
     lux.classList = "lux_header";
     document.querySelector("#dishes").appendChild(lux);
 
     categories.forEach(function(category, c) {
         if (c % 2 == 0) {
-            var td = document.createElement("td");
-            td.innerHTML = category.temperature + "&deg;";
-            td.colSpan = 2;
-            td.style.backgroundColor = temp_colors[c / 2];
-            temp.appendChild(td);
+            var div = document.createElement("div");
+            div.classList = "temp";
+            div.innerHTML = category.temperature + "&deg;";
+            div.style.backgroundColor = temp_colors[c / 2];
+            temp.appendChild(div);
         }
 
-        var td = document.createElement("td");
-        td.innerHTML = category.lux + " lux";
-        td.style.backgroundColor = lux_colors[c % 2];
-        lux.appendChild(td);
+        var div = document.createElement("div");
+        div.classList = "lux";
+        div.innerHTML = category.lux + " lux";
+        div.style.backgroundColor = lux_colors[c % 2];
+        lux.appendChild(div);
     });
 
     // initialize the Petri dishes for this species
-    var dishes = document.createElement("tr");
+    var dishes = document.createElement("div");
     dishes.id = "algae_" + a;
     dishes.classList = "algae_row";
     document.querySelector("#dishes").appendChild(dishes);
@@ -125,7 +121,6 @@ for (var c = 0; c < buttons.length; c += 1) {
                 } else {
                     day += 1;
                 }
-                console.log("Playing", day);
                 that.innerHTML = "&#10074;&#10074;";
                 PLAYING = true;
                 goToDay(day);
@@ -167,6 +162,8 @@ var getScrollTop = function(){
 
 var viz_height = document.getElementById("algae_viz").offsetTop + document.getElementById("algae_viz").offsetHeight;
 
+var CHECKED_POSITION = false;
+
 // move the controls to the highest visible algae species
 function positionControls() {
     var scrollPosition = getScrollTop();
@@ -178,14 +175,20 @@ function positionControls() {
 
     // find the species that, accounting for the page scroll, is highest and fully visible
     for (var c = 0; c < algae_data.length; c += 1) {
-        var dc_position = document.getElementById("day_container_" + c).offsetTop + document.getElementById("species").offsetTop - scrollPosition;
-        if (dc_position > 0) {
+        var dc_position = document.getElementById("day_container_" + c).offsetTop + document.getElementById("algae_viz").offsetTop - scrollPosition - document.getElementById("days_container").offsetHeight;
+        // console.log(dc_position);
+        if (dc_position > -40) {
             document.getElementById("day_container_" + c).append(document.getElementById("days_container"));
             break;
         }
     }
+    CHECKED_POSITION = true;
 }
 
 window.onscroll = function() {
-    positionControls();
+    if (!CHECKED_POSITION) {
+        positionControls();
+    } else {
+        CHECKED_POSITION = false;
+    }
 };

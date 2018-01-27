@@ -18,7 +18,7 @@ function Dish(container, size, algae_index, key) {
 
 	// smaller radii get filled up faster, so let's set the opacity accordingly
 	this.opacity = Math.max(0.33, Math.min(1, size / 120));
-	console.log("opacity", this.size, this.opacity);
+	// console.log("opacity", this.size, this.opacity);
 
 	// add a new dish to the container
 	var div = document.createElement("div");

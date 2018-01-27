@@ -162,6 +162,7 @@ var getScrollTop = function(){
 
 var viz_height = document.getElementById("algae_viz").offsetTop + document.getElementById("algae_viz").offsetHeight;
 
+// don't reactive onScroll when the day_container moves; otherwise you can get infinite switching back and forth
 var CHECKED_POSITION = false;
 
 // move the controls to the highest visible algae species
@@ -176,8 +177,9 @@ function positionControls() {
     // find the species that, accounting for the page scroll, is highest and fully visible
     for (var c = 0; c < algae_data.length; c += 1) {
         var dc_position = document.getElementById("day_container_" + c).offsetTop + document.getElementById("algae_viz").offsetTop - scrollPosition - document.getElementById("days_container").offsetHeight;
-        // console.log(dc_position);
+        // console.log(dc_position, scrollPosition);
         if (dc_position > -40) {
+            // console.log("Moving to", c);
             document.getElementById("day_container_" + c).append(document.getElementById("days_container"));
             break;
         }

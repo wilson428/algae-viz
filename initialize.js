@@ -10,6 +10,10 @@ var petri_size = width / 8 * 0.95; // add just a little margin around the dish
 var STARTING_N = 100;
 if (width <= 400) {
     STARTING_N = 50;
+    // update intro text to reflect 50 cells
+    var intro = document.getElementById("console").innerHTML;
+    intro = intro.replace("100", "50");
+    document.getElementById("console").innerHTML = intro;
 }
 
 var species = [];
